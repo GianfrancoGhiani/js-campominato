@@ -40,60 +40,77 @@ function play(){
         numCells = 100;
     }
     const bombsPos = [];
-    while (bombsPos.length<=16){
+    const numBombs = 16;
+    while (bombsPos.length<= numBombs){
         let pos = randomNumber(1,numCells);
         if (!bombsPos.includes(pos)){
             bombsPos.push(pos);
         }
     }
-    //console.log(bombsPos);
+    console.log(bombsPos);
+
+    
     const clicks = [];
-    for (let i = 0; i<numCells; i++){
-        // creation of cells with class="cell-number" to identify them
-        const cell = document.createElement('div')
-        cell.className = `cell-${i + 1} w-${Math.sqrt(numCells)} d-flex fw-bold justify-content-center align-items-center`;
-        const subCell = document.createElement('span');
-        subCell.innerText = `${i + 1}`;
-        cell.append(subCell);
-        playingSquare.appendChild(cell);
-         
-        cell.addEventListener('click', function(){
-            clicks.push('1');
+    let attempts = document.createElement('div');
+
+    function drawingCells(){
+        attempts.innerHTML= '';
+        for (let i = 0; i<numCells; i++){
+            // creation of cells with class="cell-number" to identify them
+            const cell = document.createElement('div')
+            cell.className = `cell-${i + 1} cell w-${Math.sqrt(numCells)} d-flex fw-bold justify-content-center align-items-center`;
+            const subCell = document.createElement('span');
+            subCell.innerText = `${i + 1}`;
+            cell.append(subCell);
+            playingSquare.appendChild(cell);
+
+            cell.addEventListener('click', cellColor );
+        }
+        function cellColor (){
             // if the array of random position of bombs includes the number inside the clicked cell
-            if (bombsPos.includes(parseInt(cell.innerText))){
-                const bombsArray = [];
-                // for every cell which has the class number in the array of positions of bombs add the class 'green'
-                for (let i = 0; i < bombsPos.length; i++){
-                    bombsArray.push(`cell-${bombsPos[i]}`)
-                    let bomb = document.getElementsByClassName(`${bombsArray[i]}`);
-                    bomb[0].classList.add('green');
-                    //console.log(bomb[0].className);
+            const cell = document.querySelectorAll('.cell');
+            
+            playingField.appendChild(attempts);
+            clicks.push('oneClick')
+            for (let i = 1; i <= 100; i++ ){
+                if (bombsPos.includes(parseInt(this.innerText))){
+                    const bombsClassArray = [];
+                    // for every cell which has the class number in the array of positions of bombs add the class 'green'
+                    for (let i = 0; i < bombsPos.length; i++){
+                        bombsClassArray.push(`cell-${bombsPos[i]}`)
+                        let bombCell = document.getElementsByClassName(`${bombsClassArray[i]}`);
+                        bombCell[0].classList.add('green');
+                        
+                    }
+                    // cannot continue if press a bomb
+                    for (let i = 1; i < 100; i++){
+                        cell[i].removeEventListener('click', cellColor );
+                    }
+
+                } else{
+                    this.classList.add('blue');
+                    //cannot press the same cell
+                    this.removeEventListener('click', cellColor );
+
+
                 }
-            } else{
-                cell.className += ` blue`;
             }
-            console.log(clicks.length) //number of clicks
-        })
+            attempts.innerHTML= '';
+            attempts.classList.add('align-self-end','my-3','p-3', 'rounded-2')
+            attempts.innerText = `Hai totalizzato ${clicks.length} tentativi` ;
+            console.log(clicks)
+        }
         
     }
 
-
-
-
+    drawingCells();
     
+        
+
+        
+        
+        
 }
-
-
-/*
-bombs array unisce la stringa 'cell-' con ila numero della bombPos
-per ogni elemento in bombPos 
-    bombarray += cell-{bombPOs[i]}
-
-
-
-*/
-
-
 
 
 

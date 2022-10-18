@@ -1,11 +1,12 @@
-header nav{
+header nav, footer{
     height: 10vh;
 }
 main{
     background-color: aquamarine;
-    height: 90vh;
+    height: 80vh;
     position: relative;
 }
+
 main div{
     border: 1px solid black;
 }
@@ -14,8 +15,8 @@ main div{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70vh;
-    height: 70vh;
+    width: 50vh;
+    height: 50vh;
     background-color: red;
 }
 .w-10{
