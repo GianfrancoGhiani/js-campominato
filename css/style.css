@@ -1,0 +1,38 @@
+header nav{
+    height: 10vh;
+}
+main{
+    background-color: aquamarine;
+    height: 90vh;
+    position: relative;
+}
+main div{
+    border: 1px solid black;
+}
+#big-square{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70vh;
+    height: 70vh;
+    background-color: red;
+}
+.w-10{
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+.w-9{
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+.w-7{
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+.green{
+    background-color: green;
+}
+.blue{
+    background-color: rgb(0, 153, 255);
+}
