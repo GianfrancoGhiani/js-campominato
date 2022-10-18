@@ -22,11 +22,11 @@ const playingField = document.querySelector('main');
 const playBtn = document.getElementById('play');
 const difficulty = document.getElementById('difficulty');
 
-const playingSquare = document.createElement('div');
 
 
 function play(){
-    playingSquare.setAttribute('id', 'big-square')
+    const playingSquare = document.createElement('div');
+    playingSquare.setAttribute('id', 'big-square');
     playingSquare.className = `m-auto d-flex flex-wrap`;
     playingField.appendChild(playingSquare);
     playingSquare.innerHTML = '';
@@ -51,10 +51,52 @@ function play(){
 
     
     const clicks = [];
-    let attempts = document.createElement('div');
-
     function drawingCells(){
-        attempts.innerHTML= '';
+        
+        let attempts = document.createElement('div');
+
+        
+        
+        
+        function cellColor (){
+            
+            // if the array of random position of bombs includes the number inside the clicked cell
+            const cell = document.querySelectorAll('.cell');
+            
+            clicks.push('oneClick')
+            
+            if (bombsPos.includes(parseInt(this.innerText))){
+                const bombsClassArray = [];
+                // for every cell which has the class number in the array of positions of bombs add the class 'bomb'
+                for (let i = 0; i < bombsPos.length; i++){
+                    bombsClassArray.push(`cell-${bombsPos[i]}`)                       
+                }
+                console.log(bombsClassArray)
+                for (let i = 0; i < bombsClassArray.length; i++){
+                    let bomb = document.getElementsByClassName(`${bombsClassArray[i]}`);
+                    bomb[0].classList.add('bomb');
+                }
+                console.log(bombsClassArray)
+                // cannot continue if press a bomb
+                for (let i = 1; i < numCells; i++){
+                    cell[i].removeEventListener('click', cellColor );
+                    
+                }
+            } else{
+                this.classList.add('fine');
+                //cannot press the same cell
+                this.removeEventListener('click', cellColor );
+            }
+            
+            attempts.classList.add('align-self-end','attempt','my-3','p-3', 'rounded-2')
+            attempts.innerHTML = `Hai totalizzato ${clicks.length} tentativi` ;
+            playingField.appendChild(attempts);
+            console.log(clicks)
+        }
+
+
+
+
         for (let i = 0; i<numCells; i++){
             // creation of cells with class="cell-number" to identify them
             const cell = document.createElement('div')
@@ -66,41 +108,6 @@ function play(){
 
             cell.addEventListener('click', cellColor );
         }
-        function cellColor (){
-            // if the array of random position of bombs includes the number inside the clicked cell
-            const cell = document.querySelectorAll('.cell');
-            
-            playingField.appendChild(attempts);
-            clicks.push('oneClick')
-            for (let i = 1; i <= 100; i++ ){
-                if (bombsPos.includes(parseInt(this.innerText))){
-                    const bombsClassArray = [];
-                    // for every cell which has the class number in the array of positions of bombs add the class 'green'
-                    for (let i = 0; i < bombsPos.length; i++){
-                        bombsClassArray.push(`cell-${bombsPos[i]}`)
-                        let bombCell = document.getElementsByClassName(`${bombsClassArray[i]}`);
-                        bombCell[0].classList.add('green');
-                        
-                    }
-                    // cannot continue if press a bomb
-                    for (let i = 1; i < 100; i++){
-                        cell[i].removeEventListener('click', cellColor );
-                    }
-
-                } else{
-                    this.classList.add('blue');
-                    //cannot press the same cell
-                    this.removeEventListener('click', cellColor );
-
-
-                }
-            }
-            attempts.innerHTML= '';
-            attempts.classList.add('align-self-end','my-3','p-3', 'rounded-2')
-            attempts.innerText = `Hai totalizzato ${clicks.length} tentativi` ;
-            console.log(clicks)
-        }
-        
     }
 
     drawingCells();
