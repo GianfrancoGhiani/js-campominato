@@ -25,6 +25,7 @@ const difficulty = document.getElementById('difficulty');
 
 
 function play(){
+    playingField.innerHTML = '';
     const playingSquare = document.createElement('div');
     playingSquare.setAttribute('id', 'big-square');
     playingSquare.className = `m-auto d-flex flex-wrap`;
